@@ -1,9 +1,12 @@
 import Header from "./Layout/Header";
-
+import { useEffect, useState, useUseEffect } from "react";
 import "./App.css";
 import Slider from "./components/slider/Slider";
 import slider2 from "./assets/slider2.jpg";
 import NewSlider from "./components/NewSlider";
+import ProductsList from "./components/newProducts/ProductsList";
+import { Route } from "react-router-dom";
+
 // import slider1 from "./assets/sliderImages/sliderimg1.jpg";
 
 function App() {
@@ -38,13 +41,36 @@ function App() {
     },
   ];
 
+  console.log("test console");
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("http://127.0.0.1:8000/latest-products/");
+      const data = await response.json();
+      setProducts(data);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="App">
       <Header />
-      {/* <Slider slides={sliderImages} /> */}
-      <main>{/* <NewProduct /> */}</main>
-      {/* <img src="/sliderImages/sliderimg4.jpg" /> */}
-      <NewSlider slides={sliderData} />
+      <div className="container">
+        {/* <Slider slides={sliderImages} /> */}
+        <main>{/* <NewProduct /> */}</main>
+        {/* <img src="/sliderImages/sliderimg4.jpg" /> */}
+        <NewSlider slides={sliderData} />
+        <ProductsList products={products} />
+        {/* {products.map((product) => (
+          <div>{product["product_name"]}</div>
+        ))} */}
+      </div>
+
+      <Route path="/products">
+        <p>This is Product</p>
+      </Route>
     </div>
   );
 }

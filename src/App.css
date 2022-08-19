@@ -7,3 +7,9 @@
   stroke-width: 10px;
   fill: #fff;
 }
+
+.container {
+  margin: 0 auto;
+  width: 1440px;
+  margin-bottom: 100px;
+}
